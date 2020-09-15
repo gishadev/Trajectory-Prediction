@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(1))
             rotY += Input.GetAxis("Mouse X") * rotationMultiplier;
 
         Quaternion target = Quaternion.Euler(Vector3.up * rotY);

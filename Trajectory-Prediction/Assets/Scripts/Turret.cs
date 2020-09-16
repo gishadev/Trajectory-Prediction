@@ -14,7 +14,12 @@ public class Turret : MonoBehaviour
     public float shootForce;
 
     // PRIVATE_FIELDS //
-    float yRot,xRot;
+    float yRot, xRot;
+
+    void Start()
+    {
+        PredictTrajectory();
+    }
 
     void Update()
     {
@@ -34,11 +39,24 @@ public class Turret : MonoBehaviour
         xRot = Mathf.Clamp(xRot, -maxXRotation, -minXRotation);
 
         transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
+
+        if (input.magnitude > 0)
+            PredictTrajectory();
     }
 
     void Shoot()
     {
         Rigidbody rb = Instantiate(projectilePrefab, shotPos.position, Quaternion.identity).GetComponent<Rigidbody>();
-        rb.AddForce(shotPos.forward * shootForce, ForceMode.Impulse);
+        rb.AddForce(ShootForce(), ForceMode.Impulse);
+    }
+
+    Vector3 ShootForce()
+    {
+        return shotPos.forward * shootForce;
+    }
+
+    void PredictTrajectory()
+    {
+        PredictionManager.Instance.Predict(projectilePrefab, shotPos.position, ShootForce());
     }
 }

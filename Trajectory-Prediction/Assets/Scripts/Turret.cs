@@ -16,11 +16,6 @@ public class Turret : MonoBehaviour
     // PRIVATE_FIELDS //
     float yRot, xRot;
 
-    void Start()
-    {
-        PredictTrajectory();
-    }
-
     void Update()
     {
         Rotation();
@@ -40,7 +35,7 @@ public class Turret : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
 
-        if (input.magnitude > 0)
+        if (xRot != transform.rotation.eulerAngles.x || yRot != transform.rotation.eulerAngles.y)
             PredictTrajectory();
     }
 

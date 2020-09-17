@@ -20,7 +20,7 @@ public class PredictionManager : MonoBehaviour
     PhysicsScene predictionPhysicsScene;
 
     GameObject dummy;
-    List <GameObject> dummyObjects = new List<GameObject>();
+    GameObject dummyObjectsParent;
 
     // COMPONENTS //
     LineRenderer lr;
@@ -51,13 +51,13 @@ public class PredictionManager : MonoBehaviour
             currentPhysicsScene.Simulate(Time.fixedDeltaTime);
     }
 
-    public void Predict(GameObject prefab, Vector3 origin, Vector3 force)
+    public void Predict(GameObject subject, Vector3 origin, Vector3 force)
     {
         if (currentPhysicsScene.IsValid() && predictionPhysicsScene.IsValid())
         {
             if (dummy == null)
             {
-                dummy = Instantiate(prefab);
+                dummy = Instantiate(subject);
                 SceneManager.MoveGameObjectToScene(dummy, predictionScene);
             }
 
@@ -78,20 +78,14 @@ public class PredictionManager : MonoBehaviour
 
     void CopyObjectsToSimulation()
     {
-        foreach (Transform t in objectsParent)
+        dummyObjectsParent = Instantiate(objectsParent.gameObject, objectsParent.position, objectsParent.rotation);
+        foreach (Transform t in dummyObjectsParent.GetComponentsInChildren<Transform>())
         {
-            if (t.gameObject.GetComponent<Collider>() != null)
-            {
-                GameObject fakeT = Instantiate(t.gameObject);
-                fakeT.transform.position = t.position;
-                fakeT.transform.rotation = t.rotation;
-                Renderer fakeR = fakeT.GetComponent<Renderer>();
+                Renderer fakeR = t.GetComponent<Renderer>();
                 if (fakeR)
                     fakeR.enabled = false;
-                
-                SceneManager.MoveGameObjectToScene(fakeT, predictionScene);
-                dummyObjects.Add(fakeT);
-            }
         }
+
+        SceneManager.MoveGameObjectToScene(dummyObjectsParent, predictionScene);
     }
 }

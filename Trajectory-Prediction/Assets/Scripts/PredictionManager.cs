@@ -29,26 +29,28 @@ public class PredictionManager : MonoBehaviour
     {
         Instance = this;
         lr = GetComponent<LineRenderer>();
-    }
 
-    void Start()
-    {
         Physics.autoSimulation = false;
-
-        currentScene = SceneManager.GetActiveScene();
-        currentPhysicsScene = currentScene.GetPhysicsScene();
-
-        CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
-        predictionScene = SceneManager.CreateScene("Prediction", parameters);
-        predictionPhysicsScene = predictionScene.GetPhysicsScene();
-
+        ApplyScenes();
         CopyObjectsToSimulation();
+
+        lr.enabled = true;
     }
 
     void FixedUpdate()
     {
         if (currentPhysicsScene.IsValid())
             currentPhysicsScene.Simulate(Time.fixedDeltaTime);
+    }
+
+    void ApplyScenes()
+    {
+        currentScene = SceneManager.GetActiveScene();
+        currentPhysicsScene = currentScene.GetPhysicsScene();
+
+        CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
+        predictionScene = SceneManager.CreateScene("Prediction", parameters);
+        predictionPhysicsScene = predictionScene.GetPhysicsScene();
     }
 
     public void Predict(GameObject subject, Vector3 origin, Vector3 force)

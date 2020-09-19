@@ -16,6 +16,11 @@ public class Turret : MonoBehaviour
     // PRIVATE_FIELDS //
     float yRot, xRot;
 
+    void Start()
+    {
+        PredictTrajectory();
+    }
+
     void Update()
     {
         Rotation();

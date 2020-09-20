@@ -23,7 +23,7 @@ public class Turret : MonoBehaviour
 
     void Start()
     {
-        PredictTrajectory();
+        shootForce = minShootForce;
     }
 
     void Update()
@@ -32,12 +32,14 @@ public class Turret : MonoBehaviour
 
         if (Input.GetMouseButton(0))
             AccumulateForce();
+            
         if (Input.GetMouseButtonUp(0))
         {
             Shoot();
             shootForce = minShootForce;
         }
-            
+
+        PredictTrajectory();
     }
 
     void Rotation()
@@ -50,9 +52,6 @@ public class Turret : MonoBehaviour
         xRot = Mathf.Clamp(xRot, -maxXRotation, -minXRotation);
 
         transform.rotation = Quaternion.Euler(xRot, yRot, 0f);
-
-        if (xRot != transform.rotation.eulerAngles.x || yRot != transform.rotation.eulerAngles.y)
-            PredictTrajectory();
     }
 
     void Shoot()

@@ -667,7 +667,9 @@ MonoBehaviour:
   minXRotation: -60
   projectilePrefab: {fileID: 3371254195978778445, guid: 3e3daf1e540d0294b9fce63699266885, type: 3}
   shotPos: {fileID: 1061136561}
-  shootForce: 30
+  fullAccumulationTime: 2
+  minShootForce: 15
+  maxShootForce: 45
 --- !u!1 &1251776641
 GameObject:
   m_ObjectHideFlags: 0

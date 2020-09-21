@@ -6,11 +6,15 @@ public class Collectible : MonoBehaviour
     {
         Destroy(gameObject);
         SpawnManager.Instance.SpawnStar();
+        ScoreManager.Instance.Score();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Projectile"))
+        {
             Collect();
+        }
+            
     }
 }

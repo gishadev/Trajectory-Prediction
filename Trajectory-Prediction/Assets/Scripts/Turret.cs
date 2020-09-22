@@ -12,32 +12,18 @@ public class Turret : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform shotPos;
 
-    public float fullAccumulationTime = 1f;
-
-    public float minShootForce;
-    public float maxShootForce;
+    public float shootForce;
 
     // PRIVATE_FIELDS //
     float yRot, xRot;
-    float shootForce;
 
-    void Start()
-    {
-        shootForce = minShootForce;
-    }
 
     void Update()
     {
         Rotation();
 
-        if (Input.GetMouseButton(0))
-            AccumulateForce();
-            
         if (Input.GetMouseButtonUp(0))
-        {
             Shoot();
-            shootForce = minShootForce;
-        }
 
         PredictTrajectory();
     }
@@ -57,13 +43,8 @@ public class Turret : MonoBehaviour
     void Shoot()
     {
         Rigidbody rb = Instantiate(projectilePrefab, shotPos.position, Quaternion.identity).GetComponent<Rigidbody>();
+        VFXEmitter.Emit("Shoot", shotPos.position);
         rb.AddForce(ShootForce(), ForceMode.Impulse);
-    }
-
-    void AccumulateForce()
-    {
-        float accumulationSpeed = maxShootForce * (Time.deltaTime / fullAccumulationTime);
-        shootForce = Mathf.Clamp(shootForce + accumulationSpeed, minShootForce, maxShootForce);
     }
 
     Vector3 ShootForce()

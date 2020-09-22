@@ -766,9 +766,7 @@ MonoBehaviour:
   minXRotation: -60
   projectilePrefab: {fileID: 3371254195978778445, guid: 3e3daf1e540d0294b9fce63699266885, type: 3}
   shotPos: {fileID: 1061136561}
-  fullAccumulationTime: 2
-  minShootForce: 15
-  maxShootForce: 45
+  shootForce: 25
 --- !u!1 &1251776641
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,6 +822,7 @@ GameObject:
   - component: {fileID: 1274015268}
   - component: {fileID: 1274015269}
   - component: {fileID: 1274015270}
+  - component: {fileID: 1274015271}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -871,7 +870,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777ccd0581564654cae8575d366559fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 1316082428}
+--- !u!114 &1274015271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274015267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302eb3884a52e134f8de1cac364c467e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+  - name: Shoot
+    prefab: {fileID: 4638622596213654926, guid: b9cc4a1c9802e1a49a990a1ecfdd9a52, type: 3}
+  - name: Star
+    prefab: {fileID: 8574772171507454637, guid: 72eee3fdcfba39e45a0c651043b3f543, type: 3}
 --- !u!1 &1316082426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,7 +1071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ff1b63b9a07c546b35832ef254b434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxIterations: 150
+  maxIterations: 100
   objectsParent: {fileID: 720718529}
 --- !u!120 &1318918057
 LineRenderer:
